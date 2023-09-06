@@ -1,0 +1,25 @@
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  main:
+    allow-circular-references: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3305/
+
+    username: root
+    password: root
+
+  jpa:
+    database: mysql
+    show-sql: true
+
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+      format_sql: true

@@ -1,2 +1,9 @@
-package com.example.teto.user.controller.dto.request;public class LoginRequest {
+package com.example.teto.user.controller.dto.request;
+
+import lombok.Getter;
+
+@Getter
+public class LoginRequest {
+    private String email;
+    private String password;
 }
