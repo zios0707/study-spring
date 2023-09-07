@@ -23,12 +23,16 @@ public class JwtAuthFiler extends OncePerRequestFilter {
         //헤더에서 토큰 뜯기
         String token = jwtProvider.resolveToken(request);
 
+        System.out.println(token);
         //토큰 유효 여부
         if(token != null && jwtProvider.validateToken(token)) {
             //유효 할 시 토큰으로부터 유저 정보 받기
+            System.out.println(1);
             Authentication authentication = jwtProvider.getAuthentication(token);
             // security context에 저장
+            System.out.println(1);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println(1);
         }else
             log.info("토큰이 유효하지 않아용");
 
