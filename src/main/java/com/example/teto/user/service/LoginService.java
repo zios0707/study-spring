@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,18 +19,21 @@ public class LoginService {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
+    @Transactional
     public LoginResponse login(LoginRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 EMAIL 입니다."));
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
         String accessToken = jwtProvider.createAccessToken(request.getEmail());
+        String refreshToken = jwtProvider.createRefreshToken(request.getEmail());
 
         return LoginResponse.builder()
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }

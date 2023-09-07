@@ -8,10 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
@@ -19,24 +20,37 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    @Value("secretManySecret")
+    @Value("${jwt.secret}")
     private String secretKey;
+
+    private final UserDetailsService userDetailsService;
+
+    // 빈 생성 후 시크릿 키 암호화
+    @PostConstruct
+    protected void init() {
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    }
 
     // 토큰 발급 신청 (토큰 목적에 따라 유연하게 추가 할 것)
 
     public String createAccessToken(String email) {
-        return createToken(email, "access", 600L);
+
+        return createToken(email, "access", 10L); // 10분
+    }
+
+    public String createRefreshToken(String email) {
+        return createToken(email, "refresh", 60 * 24 * 14L); // 14일
     }
 
     // 토큰 발급
-    public String createToken(String name, String type, long expireTimeMs) {
+    public String createToken(String subject, String type, long expireTimeMs) {
         //claim 은 jwt 토큰에 들어갈 정보.
         try {
             return Jwts.builder()
                     .claim("type", type)
                     .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setSubject(name)
-                    .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
+                    .setSubject(subject)
+                    .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs * 1000 * 60))
                     .signWith(SignatureAlgorithm.HS256, secretKey)
                     .compact();
         } catch(JwtException e) {
@@ -47,7 +61,7 @@ public class JwtProvider {
     // 유효성 확인
     public boolean validateToken(String token) throws JwtException {
         try {
-            Jws<Claims>claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         }catch (JwtException e) {
             return false;
@@ -63,17 +77,8 @@ public class JwtProvider {
             // 솔리드 원칙?
 
             // 유저디테일에서 문제 생기는 모양이라 다시함.
-            Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody();
-            UserDetails userDetails = new User(getUserName(token), "", Collections.emptyList());
-
-
-
+            UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserName(token));
             return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-        } catch (UsernameNotFoundException e){
-            return null;
         } catch (JwtException e) {
             return null;
         }

@@ -14,13 +14,13 @@ public class RestController {
     private final LoginService loginService;
     private final SignService signService;
 
+    @PostMapping("/sign")
+    public void sign(@RequestBody SignRequest request) {
+        signService.Sign(request);
+    }
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return loginService.login(request);
-    }
-
-    @PostMapping("/Sign")
-    public void sign(@RequestBody SignRequest request) {
-        signService.Sign(request);
     }
 }

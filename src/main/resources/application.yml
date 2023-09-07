@@ -3,12 +3,10 @@ server:
   port: 8080
 
 spring:
-  main:
-    allow-circular-references: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3305/
+    url: jdbc:mysql://localhost:3305/mint1?characterEncoding=UTF-8&serverTimezone=UTC
 
     username: root
     password: root
@@ -23,3 +21,6 @@ spring:
     properties:
       hibernate:
       format_sql: true
+
+jwt:
+  secret: tetochandaisukidayo
