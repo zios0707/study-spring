@@ -2,6 +2,7 @@ package com.example.teto.security.Jwt;
 
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
@@ -62,8 +64,10 @@ public class JwtProvider {
     public boolean validateToken(String token) throws JwtException {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            log.info("유효 true");
             return !claims.getBody().getExpiration().before(new Date());
         }catch (JwtException e) {
+            log.info("유효 true");
             return false;
         }
     }
@@ -71,12 +75,6 @@ public class JwtProvider {
     // 인증 정보 조회
     public Authentication getAuthentication(String token) {
         try {
-            /*UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserName(token));*/
-            // Claims claim = parseClaims(token); 이 문을 사용해서 Claims 객체를 생성하고 getName 으로 유저정보를 받아내도 됨.
-            // 근데 코드가 쓸데 없이 길어지고 뭐 과정을 설명할 것도 아니니까 기각.
-            // 솔리드 원칙?
-
-            // 유저디테일에서 문제 생기는 모양이라 다시함.
             UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserName(token));
             return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
         } catch (JwtException e) {
