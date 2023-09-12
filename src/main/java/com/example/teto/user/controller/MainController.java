@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/what")
 @RequiredArgsConstructor
-public class RestController {
+public class MainController {
     private final LoginService loginService;
     private final SignService signService;
     private final UserFacade userFacade;
