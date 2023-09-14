@@ -2,6 +2,8 @@ package com.example.teto.user.entity;
 
 
 import com.example.teto.board.entity.Board;
+import com.example.teto.board.entity.DislikeBoards;
+import com.example.teto.board.entity.LikeBoards;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,6 +38,12 @@ public class User implements UserDetails {
     @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "liked_user")
+    private List<LikeBoards> likeBoards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "disliked_user")
+    private List<DislikeBoards> dislikeBoards = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

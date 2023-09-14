@@ -1,11 +1,12 @@
 package com.example.teto.board.entity;
 
-import com.example.teto.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Setter
@@ -23,7 +24,7 @@ public class Board {
     @Column(name = "viewPath", nullable = false)
     private String viewPath;
 
-
+    
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -36,9 +37,14 @@ public class Board {
     @Column(name = "likes", nullable = false)
     private Integer likes = 0;
 
+    @OneToMany(mappedBy = "like_board")
+    private List<LikeBoards> likeBoards = new ArrayList<>();
+
     @Column(name = "dislikes", nullable = false)
     private Integer dislikes = 0;
 
+    @OneToMany(mappedBy = "dislike_board")
+    private List<DislikeBoards> dislikeBoards = new ArrayList<>();
 
 
     @Column(name = "title", nullable = false)
