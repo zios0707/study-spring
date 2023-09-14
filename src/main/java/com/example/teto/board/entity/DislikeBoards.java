@@ -21,12 +21,12 @@ public class DislikeBoards {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "dislikeboard_id")
+    private Board dislikeBoard;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User disliked_user;
 
 
 

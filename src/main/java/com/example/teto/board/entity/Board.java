@@ -37,13 +37,13 @@ public class Board {
     @Column(name = "likes", nullable = false)
     private Integer likes = 0;
 
-    @OneToMany(mappedBy = "like_board")
+    @OneToMany(mappedBy = "likeBoard")
     private List<LikeBoards> likeBoards = new ArrayList<>();
 
     @Column(name = "dislikes", nullable = false)
     private Integer dislikes = 0;
 
-    @OneToMany(mappedBy = "dislike_board")
+    @OneToMany(mappedBy = "dislikeBoard")
     private List<DislikeBoards> dislikeBoards = new ArrayList<>();
 
 

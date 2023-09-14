@@ -13,15 +13,15 @@ public class LikeBoardsDTO {
 
     public static LikeBoardsDTO of(LikeBoards likeBoards) {
         return LikeBoardsDTO.builder()
-                .username(likeBoards.getUser().getName())
-                .view_id(likeBoards.getBoard().getViewPath())
+                .username(likeBoards.getLiked_user().getName())
+                .view_id(likeBoards.getLikeBoard().getViewPath())
                 .build();
     }
 
     public static LikeBoardsDTO of(DislikeBoards dislikeBoards) {
         return LikeBoardsDTO.builder()
-                .username(dislikeBoards.getUser().getName())
-                .view_id(dislikeBoards.getBoard().getViewPath())
+                .username(dislikeBoards.getDisliked_user().getName())
+                .view_id(dislikeBoards.getDislikeBoard().getViewPath())
                 .build();
     }
 }

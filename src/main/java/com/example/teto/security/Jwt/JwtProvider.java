@@ -37,7 +37,7 @@ public class JwtProvider {
 
     public String createAccessToken(String email) {
 
-        return createToken(email, "access", 10L); // 10분
+        return createToken(email, "access", 60 * 3L); // 3시간
     }
 
     public String createRefreshToken(String email) {

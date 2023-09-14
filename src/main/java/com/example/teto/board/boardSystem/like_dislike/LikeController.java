@@ -14,12 +14,12 @@ public class LikeController {
 
 
     @PostMapping("/{view_id}/like")
-    private String like(@PathVariable String view_id) {
+    private String like(@PathVariable String view_id) throws IllegalAccessException {
         return likeService.like(view_id);
     }
 
     @PostMapping("/{view_id}/dislike")
-    private String dislike(@PathVariable String view_id) {
+    private String dislike(@PathVariable String view_id) throws IllegalAccessException {
         return likeService.dislike(view_id);
     }
 
