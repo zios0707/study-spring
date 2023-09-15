@@ -86,12 +86,6 @@ public class JwtProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-
-    // 리퀘스트의 헤더에서 토큰값 추출
-    public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("Authorization").substring("Bearer".length());
-    }
-
 /*    private String getName(Claims claims) {
         return claims.getSubject();
     }*/
