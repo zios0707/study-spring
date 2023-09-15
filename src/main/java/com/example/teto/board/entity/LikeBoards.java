@@ -1,10 +1,7 @@
 package com.example.teto.board.entity;
 
 import com.example.teto.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class LikeBoards {
 
     @Id
@@ -26,7 +24,7 @@ public class LikeBoards {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User liked_user;
+    private User likeduser;
 
 
 

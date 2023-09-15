@@ -1,8 +1,6 @@
 package com.example.teto.user.entity;
 
 
-import com.example.teto.board.entity.Board;
-import com.example.teto.board.entity.DislikeBoards;
 import com.example.teto.board.entity.LikeBoards;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -39,11 +37,8 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "liked_user")
+    @OneToMany(mappedBy = "likeduser")
     private List<LikeBoards> likeBoards = new ArrayList<>();
-
-    @OneToMany(mappedBy = "disliked_user")
-    private List<DislikeBoards> dislikeBoards = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

@@ -1,6 +1,5 @@
-package com.example.teto.board.boardSystem.like_dislike;
+package com.example.teto.board.boardSystem.like;
 
-import com.example.teto.user.entity.User;
 import com.example.teto.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/board")
 public class LikeController {
     private final LikeService likeService;
-    private final UserFacade userFacade;
 
 
     @PostMapping("/{view_id}/like")
@@ -18,9 +16,5 @@ public class LikeController {
         return likeService.like(view_id);
     }
 
-    @PostMapping("/{view_id}/dislike")
-    private String dislike(@PathVariable String view_id) throws IllegalAccessException {
-        return likeService.dislike(view_id);
-    }
 
 }

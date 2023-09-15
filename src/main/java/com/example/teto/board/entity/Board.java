@@ -40,13 +40,6 @@ public class Board {
     @OneToMany(mappedBy = "likeBoard")
     private List<LikeBoards> likeBoards = new ArrayList<>();
 
-    @Column(name = "dislikes", nullable = false)
-    private Integer dislikes = 0;
-
-    @OneToMany(mappedBy = "dislikeBoard")
-    private List<DislikeBoards> dislikeBoards = new ArrayList<>();
-
-
     @Column(name = "title", nullable = false)
     private String title;
 

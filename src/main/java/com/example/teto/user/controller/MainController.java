@@ -10,7 +10,7 @@ import com.example.teto.user.service.SignService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/api/what")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class MainController {
     private final LoginService loginService;
