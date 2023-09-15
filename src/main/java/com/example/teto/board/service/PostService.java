@@ -25,7 +25,7 @@ public class PostService {
         Long r;
 
         while (true){
-            r = (int) ((Math.random() * 100501001) + 11111111) % 100000000L;
+            r = (int) ((Math.random() * 100501001L) + 11111111L) % 100000000L;
             if(boardRepository.findByViewPath(r.toString()).isEmpty()) {
                 break;
             }

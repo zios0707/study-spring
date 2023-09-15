@@ -32,10 +32,10 @@ public class Board {
     private Date date;
 
     @Column(name = "views", nullable = false)
-    private Integer views = 0;
+    private Long views = 0L;
 
     @Column(name = "likes", nullable = false)
-    private Integer likes = 0;
+    private Long likes = 0L;
 
     @OneToMany(mappedBy = "likeBoard")
     private List<LikeBoards> likeBoards = new ArrayList<>();

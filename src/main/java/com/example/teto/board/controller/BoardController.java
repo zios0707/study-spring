@@ -1,14 +1,14 @@
 package com.example.teto.board.controller;
 
-import com.example.teto.board.controller.dto.request.PostRequest;
 import com.example.teto.board.controller.dto.request.DeleteRequest;
+import com.example.teto.board.controller.dto.request.PostRequest;
 import com.example.teto.board.entity.Board;
-import com.example.teto.board.service.DeleteService;
-import com.example.teto.board.service.GetBoardService;
-import com.example.teto.board.service.ModifyService;
-import com.example.teto.board.service.PostService;
+import com.example.teto.board.service.*;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/board")
@@ -18,6 +18,7 @@ public class BoardController {
     private final GetBoardService getBoardService;
     private final DeleteService deleteService;
     private final ModifyService modifyService;
+    private final ViewsService viewsService;
 
     @PostMapping("/post")
     private String post(@RequestBody PostRequest postRequest) {
@@ -25,8 +26,8 @@ public class BoardController {
     }
 
     @GetMapping("/{view_id}")
-    private Board getBoard(@PathVariable String view_id) throws IllegalAccessException {
-        return getBoardService.getBoard(view_id);
+    private Board getBoard(@PathVariable String view_id, @CookieValue(name = "viewCount", required = false) String viewedList, HttpServletResponse response) throws IllegalAccessException, ParseException {
+        return viewsService.view(getBoardService.getBoard(view_id), response, viewedList);
     }
 
     @PostMapping("/delete")
