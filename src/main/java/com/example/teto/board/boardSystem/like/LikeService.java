@@ -33,16 +33,33 @@ public class LikeService {
             }
         }
         if(iflike) {
-            //좋아요 끄기
-/*            likeBoardsRepository
-            System.out.println(newRegister.toString());*/
+            Board likeBoard = boardRepository.findByViewPath(id)
+                    .orElseThrow(() -> new IllegalAccessException("잘못된 접근 입니다."));
+
+            //좋아요 카운팅
+            int likes = likeBoard.getLikes();
+            likeBoard.setLikes(likes - 1);
+            boardRepository.save(likeBoard);
+
+            //다 대 다 관계 딜리팅
+            LikeBoards entity = likeBoardsRepository.findByLikeBoardAndLikeduser(likeBoard, user);
+            System.out.println(entity.toString());
+            likeBoardsRepository.delete(entity);
             return "Like off";
         }else {
             //좋아요 키기
             LikeBoards newRegister = new LikeBoards();
+            Board likeBoard = boardRepository.findByViewPath(id)
+                    .orElseThrow(() -> new IllegalAccessException("잘못된 접근 입니다."));
+
+            //좋아요 카운팅
+            int likes = likeBoard.getLikes();
+            likeBoard.setLikes(likes + 1);
+            boardRepository.save(likeBoard);
+
+            //다 대 다 관계 매핑
             newRegister.setLikeduser(user);
-            newRegister.setLikeBoard(boardRepository.findByViewPath(id)
-                    .orElseThrow(() -> new IllegalAccessException("잘못된 접근 입니다.")));
+            newRegister.setLikeBoard(likeBoard);
             likeBoardsRepository.save(newRegister);
             System.out.println(newRegister.toString());
             return "Like on";

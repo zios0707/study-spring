@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface LikeBoardsRepository extends JpaRepository<LikeBoards, String> {
-    LikeBoards findByLikeBoardAndLikeduser(String Board_id, String user_id);
+
+    LikeBoards findByLikeBoardAndLikeduser(Board b, User u);
 
 }
