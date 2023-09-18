@@ -17,19 +17,23 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) /*솔직히 그냥 아이디는 {1, 2, 3...} 수열로 해도 되는데 멋 없어서 난수화 시킴*/
-    @Column(name = "board_id")
     @JsonIgnore
     private Long id;
 
+    @JsonIgnore
     @Column(name = "viewPath", nullable = false)
     private String viewPath;
 
-    
-    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "date", nullable = false)
     private Date date;
+
+    @Column(name = "numOfComments")
+    private Long comment = 0L;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "commentBoard")
+    private List<Comment> comments = new ArrayList<>();
 
     @Column(name = "views", nullable = false)
     private Long views = 0L;
@@ -37,6 +41,7 @@ public class Board {
     @Column(name = "likes", nullable = false)
     private Long likes = 0L;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "likeBoard")
     private List<LikeBoards> likeBoards = new ArrayList<>();
 
@@ -46,12 +51,9 @@ public class Board {
     @Column(name = "subtitle", nullable = false)
     private String subtitle;
 
-    @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "image", nullable = false)
-    private String image = "";
-
+    private String image;
 
     @Column(name = "modified", nullable = false)
     private Boolean modified = false;
@@ -75,6 +77,4 @@ public class Board {
         this.image = image;
         this.modified = true;
     }
-/*    @OneToMany(mappedBy = "board") 나중에 댓글과 대댓글까지 완성 될 경우에 주석 풀기*/
-/*    private String comments;*/
 }
