@@ -5,7 +5,6 @@ import com.example.teto.board.controller.dto.request.PostRequest;
 import com.example.teto.board.entity.Board;
 import com.example.teto.board.service.*;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +25,9 @@ public class BoardController {
     }
 
     @GetMapping("/{view_id}")
-    private Board getBoard(@PathVariable String view_id, @CookieValue(name = "viewCount", required = false) String viewedList, HttpServletResponse response) throws IllegalAccessException, ParseException {
-        return viewsService.view(getBoardService.getBoard(view_id), response, viewedList);
+    private Board getBoard(@PathVariable String view_id, @CookieValue(name = "viewCount", required = false) String viewedList, HttpServletResponse response) throws IllegalAccessException {
+        Board board = getBoardService.getBoard(view_id);
+        return viewsService.view(board, response, viewedList);
     }
 
     @PostMapping("/delete")
