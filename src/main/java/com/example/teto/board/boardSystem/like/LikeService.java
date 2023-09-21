@@ -7,8 +7,6 @@ import com.example.teto.board.repository.LikeBoardsRepository;
 import com.example.teto.user.entity.User;
 import com.example.teto.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +15,6 @@ import java.util.List;
 @Transactional
 @Service
 @RequiredArgsConstructor
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LikeService {
     private final BoardRepository boardRepository;
     private final LikeBoardsRepository likeBoardsRepository;

@@ -6,8 +6,6 @@ import com.example.teto.board.repository.BoardRepository;
 import com.example.teto.user.entity.User;
 import com.example.teto.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,6 @@ import java.util.Date;
 @Transactional
 @Service
 @RequiredArgsConstructor
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PostService {
     private final BoardRepository boardRepository;
     private final BoardFacade boardFacade;
