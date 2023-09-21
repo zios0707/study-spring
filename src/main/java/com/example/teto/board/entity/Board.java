@@ -58,7 +58,6 @@ public class Board {
     @Column(name = "modified", nullable = false)
     private Boolean modified = false;
 
-
     @Builder
     public Board(Date date, String title, String subtitle, String category, String image, String username, String path) {
         this.date = date;
