@@ -5,15 +5,24 @@ import com.example.teto.board.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board/{view_id}/comment")
+@RequestMapping("/api/board/view/{view_id}/comment")
 public class CommentController {
     private final CommentService commentService;
 
+    @GetMapping("/")
+    private List<Comment> getCommentList(@PathVariable String view_id) throws IllegalAccessException {
+        return commentService.getList(view_id);
+    }
+
     @PostMapping("/post")
     private String PostComment(@PathVariable String view_id,@RequestBody CmtPostRequest postRequest) {
-
+        System.out.println("1");
+        System.out.println(view_id);
+        System.out.println("1");
         return commentService.Post(view_id, postRequest);
     }
 

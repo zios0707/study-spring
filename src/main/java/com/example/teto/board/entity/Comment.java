@@ -33,6 +33,7 @@ public class Comment {
     @JsonIgnore
     private Board commentBoard;
 
+
     @Builder
     public Comment(String username, String content, Date date, String viewPath, Board commentBoard) {
         this.username = username;
