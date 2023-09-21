@@ -19,10 +19,7 @@ public class CommentController {
     }
 
     @PostMapping("/post")
-    private String PostComment(@PathVariable String view_id,@RequestBody CmtPostRequest postRequest) {
-        System.out.println("1");
-        System.out.println(view_id);
-        System.out.println("1");
+    private String PostComment(@PathVariable String view_id, @RequestBody CmtPostRequest postRequest) {
         return commentService.Post(view_id, postRequest);
     }
 

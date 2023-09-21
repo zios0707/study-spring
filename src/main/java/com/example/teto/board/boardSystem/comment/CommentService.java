@@ -9,18 +9,24 @@ import com.example.teto.board.service.BoardFacade;
 import com.example.teto.user.entity.User;
 import com.example.teto.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CommentService {
     private final UserFacade userFacade;
     private final BoardFacade boardFacade;
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+
 
     public String Post(String view_id, CmtPostRequest request) {
         User user = userFacade.getInfo();

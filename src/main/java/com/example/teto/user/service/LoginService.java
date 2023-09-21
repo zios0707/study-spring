@@ -7,19 +7,22 @@ import com.example.teto.user.entity.User;
 import com.example.teto.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
+@Transactional
 @Service
 @RequiredArgsConstructor
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
-    @Transactional
     public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())

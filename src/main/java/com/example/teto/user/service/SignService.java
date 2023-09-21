@@ -4,20 +4,23 @@ import com.example.teto.user.controller.dto.request.SignRequest;
 import com.example.teto.user.entity.User;
 import com.example.teto.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SignService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public void Sign(SignRequest request) {
         if(userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 이메일 입니다.");
